@@ -13,7 +13,6 @@ describe("Given I am connected as an employee", () => {
       Firestore.bills = () => ({bills, get: jest.fn().mockResolvedValue()})
       // https://stackoverflow.com/a/32911774/14139451 
       Object.defineProperty(window, 'localStorage', {value: localStorageMock})
-      // TODO stuck
       window.localStorage.setItem('user', JSON.stringify({
         type: 'Employee'
       }))
@@ -26,7 +25,6 @@ describe("Given I am connected as an employee", () => {
     })
 
     test("Then bills should be ordered from earliest to latest", () => {
-      // TODO STUCk
       const html = BillsUI({ data: bills })
       document.body.innerHTML = html
       const dates = screen.getAllByText(/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i).map(a => a.innerHTML)
@@ -73,7 +71,6 @@ describe("Given I am connected as an employee", () => {
       const bills = new Bills({
         document, onNavigate, firestore:null, localStorage: window.localStorage
       })
-      // TODO jest.fn(bills.handleClickNewBill)
       const handleClickNewBill = jest.fn(bills.handleClickNewBill)
       const buttonNewBill = screen.getByTestId('btn-new-bill')
       expect(buttonNewBill).toBeTruthy()
@@ -94,7 +91,6 @@ describe("Given I am connected as an employee", () => {
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname })
       } 
-      // TODO $.fn.modal ?? c'est quoi ca
       $.fn.modal = jest.fn()
       const bills = new Bills({
         document, onNavigate, firestore: null, localStorage: window.localStorage
@@ -109,7 +105,6 @@ describe("Given I am connected as an employee", () => {
     })
   })
 
-  // GET TODO commenter 
   describe("When I navigate to Bills Page", () => {
     test("fetches bills from mock API GET", async () => {
       const getSpy = jest.spyOn(firebase, "get")       

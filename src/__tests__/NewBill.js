@@ -6,7 +6,6 @@ import NewBill from "../containers/NewBill"
 import {screen, fireEvent} from "@testing-library/jest-dom"
 import BillsUi from "../views/BillsUI"
 
-// TODO DEBUGGER JEST SCREEN
 
 // test d'intégration POST
 describe("Given I am connected as an employee", () => {
@@ -21,10 +20,7 @@ describe("Given I am connected as an employee", () => {
   })
 
   test("Then it should POST a bill but error 404", async () => {
-    // mockImplementationOnce
-    // SYNTAXE ()=>
     firebase.post.mockImplementationOnce(()=>
-      // new error Promise Promise.reject
       Promise.reject(new Error('404 error'))
     )
     const html = BillsUi({ error: "404 error" })
@@ -51,7 +47,6 @@ describe("Given I am connected as an employee", () => {
       window.localStorage.setItem('user', JSON.stringify({
         type: 'Employee'
       }))
-      // TODO detailler onNavigate
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES ({pathname})
       }
@@ -63,9 +58,7 @@ describe("Given I am connected as an employee", () => {
       // https://jestjs.io/docs/mock-functions#using-a-mock-function
       const handleChangeFile = jest.fn(newBill.handleChangeFile)
       const input = screen.getByTestId("file")
-      // addEventListner change
       input.addEventListener('change', handleChangeFile)
-      // fireEvent change
       fireEvent.change(input, {
         target: {
           files: [new File(["bill.png"], "bill.png", { type: "image/png" })]
@@ -78,7 +71,6 @@ describe("Given I am connected as an employee", () => {
 
   describe("When I submit a bill but the file haven't a good extension", () => {
     test("It should not submit the form", () => {
-      // TODO utiliser capiche localStorageMock
       Object.defineProperty(window, 'localStorage', { value: localStorageMock })
       window.localStorage.setItem('user', JSON.stringify({
         type: 'Employee'
