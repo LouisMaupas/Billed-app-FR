@@ -1,3 +1,4 @@
+// https://stackoverflow.com/a/32911774/14139451
 export const localStorageMock = (function() {
   let store = {};
   return {
@@ -15,3 +16,4 @@ export const localStorageMock = (function() {
     }
   }
 })()
+

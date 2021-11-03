@@ -11,7 +11,9 @@ describe("Given I am connected as an employee", () => {
     test("Then bill icon in vertical layout should be highlighted", () => {
       // https://jestjs.io/fr/docs/mock-function-api jest.fn()
       Firestore.bills = () => ({bills, get: jest.fn().mockResolvedValue()})
+      // https://stackoverflow.com/a/32911774/14139451 
       Object.defineProperty(window, 'localStorage', {value: localStorageMock})
+      // TODO stuck
       window.localStorage.setItem('user', JSON.stringify({
         type: 'Employee'
       }))
@@ -24,6 +26,7 @@ describe("Given I am connected as an employee", () => {
     })
 
     test("Then bills should be ordered from earliest to latest", () => {
+      // TODO STUCk
       const html = BillsUI({ data: bills })
       document.body.innerHTML = html
       const dates = screen.getAllByText(/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i).map(a => a.innerHTML)
