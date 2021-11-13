@@ -1,3 +1,7 @@
+/**
+* @jest-environment jsdom
+*/
+
 import localStorageMock from "../__mocks__/localStorage.js"
 import firebase from "../__mocks__/firebase"
 import ROUTES from "../constants/routes"

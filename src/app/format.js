@@ -1,6 +1,7 @@
 export const formatDate = (dateStr) => {
   const date = new Date(dateStr)
-  // [Bug report] - Bills fixed by date formated to display + date unformated for manipulations
+  console.log(date)
+  // FIXED BUG#1 [Bug report] - Bills fixed by date formated to display + date unformated for manipulations
   return {
     date : date.toLocaleDateString('fr-FR'),
     dateObj : date
