@@ -3,12 +3,14 @@
 */
 
 import {screen} from '@testing-library/dom'
+// https://testing-library.com/docs/queries/bytestid/
 import {BillsUI, row} from "../views/BillsUI.js"
 import { bills } from "../fixtures/bills.js"
 import firebase from "../__mocks__/firebase"
 import Firestore from "../app/Firestore"
 import localStorageMock from "../__mocks__/localStorage"
 import { Router } from "../app/Router";
+
 
 
 // Setup

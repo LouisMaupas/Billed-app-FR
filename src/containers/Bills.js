@@ -41,6 +41,7 @@ export default class {
   /**
    * Employee at login loading bills
    */
+  /* istanbul ignore next */
   getBills = () => {
     const userEmail = localStorage.getItem('user') ?
       JSON.parse(localStorage.getItem('user')).email : ""

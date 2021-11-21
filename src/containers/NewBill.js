@@ -39,39 +39,7 @@ export default class NewBill {
         document.querySelector(`input[data-testid='file']`).value = null;
         alert('Votre fichier doit être un png, jpg ou jpeg.')
       }
-
-    /*
-    handleChangeFile = (e) => {
-        const file = this.document.querySelector(`input[data-testid='file']`).files[0];
-        const extensionCheck = /(png|jpg|jpeg)/g;
-        const extension = file.name.split('.').pop();
-
-        if (extension.toLowerCase().match(extensionCheck)) {
-          document.getElementById('errorFileType').classList.add('hideErrorMessage');
-          const filePath = e.target.value.split(/\\/g);
-          const fileName = filePath[filePath.length - 1];
-
-          this.firestore
-            .storage
-            .ref(`justificatifs/${fileName}`)
-            .put(file)
-            .then(snapshot => snapshot.ref.getDownloadURL())
-            .then(url => {
-              this.fileUrl = url
-              this.fileName = fileName
-            });
-
-
-        } else {
-          document.getElementById('errorFileType').classList.remove('hideErrorMessage');
-          this.document.querySelector(`input[data-testid='file']`).value = null;
-        };
-    */
 }
-
-
-
-
 
   handleSubmit = e => {
     e.preventDefault()
@@ -96,6 +64,7 @@ export default class NewBill {
   }
 
   // not need to cover this function by tests
+  /* istanbul ignore next */
   createBill = (bill) => {
     if (this.firestore) {
       this.firestore

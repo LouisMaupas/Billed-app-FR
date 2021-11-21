@@ -7,7 +7,8 @@ import firebase from "../__mocks__/firebase"
 import ROUTES from "../constants/routes"
 import NewBillUI from "../views/NewBillUI"
 import NewBill from "../containers/NewBill"
-import {screen, fireEvent} from "@testing-library/jest-dom"
+import {screen} from "@testing-library/jest-dom"
+import {fireEvent} from "@testing-library/user-event"
 import BillsUi from "../views/BillsUI"
 
 
@@ -29,7 +30,7 @@ describe("Given I am connected as an employee", () => {
     )
     const html = BillsUi({ error: "404 error" })
     document.body.innerHTML = html
-    const message = await screen.getByText(/Erreur 404/)
+    const message = await getByText(/Erreur 404/)
     expect(message).toBeTruthy()
   })
   test("It should add bill from an API and fails with 500 message error", async () => {
