@@ -1,46 +1,35 @@
-/**
-* @jest-environment jsdom
-*/
-
-import localStorageMock from "../__mocks__/localStorage.js"
+import { fireEvent, screen } from "@testing-library/dom"
+import NewBillUI from "../views/NewBillUI.js"
+import NewBill from "../containers/NewBill.js"
+import { localStorageMock } from "../__mocks__/localStorage.js"
+import { ROUTES, ROUTES_PATH } from '../constants/routes.js'
 import firebase from "../__mocks__/firebase"
-import ROUTES from "../constants/routes"
-import NewBillUI from "../views/NewBillUI"
-import NewBill from "../containers/NewBill"
-import {screen} from "@testing-library/jest-dom"
-import {fireEvent} from "@testing-library/user-event"
-import BillsUi from "../views/BillsUI"
 
 
 // test d'intégration POST
 describe("Given I am connected as an employee", () => {
   describe("When I am on NewBill Page, and I create a new bill", () => {
     test("Then it should POST a bill", async () => {
-      const spy = jest.spyOn(firebase, "post")
-      const bill = { }
-      const bills = await firebase.post(bill)
-      expect(spy).toHaveBeenCalledTimes(1)
+      const postSpy = jest.spyOn(firebase, "post")
+      const newBill = {
+        "id": "47qAXb6fIm2zOKkLzMro",
+        "vat": "80",
+        "fileUrl": "https://firebasestorage.googleapis.com/v0/b/billable-677b6.a…f-1.jpg?alt=media&token=c1640e12-a24b-4b11-ae52-529112e9602a",
+        "status": "pending",
+        "type": "Hôtel et logement",
+        "commentary": "séminaire billed",
+        "name": "encore",
+        "fileName": "preview-facture-free-201801-pdf-1.jpg",
+        "date": "2004-04-04",
+        "amount": 400,
+        "commentAdmin": "ok",
+        "email": "a@a",
+        "pct": 20
+      }
+      const bills = await firebase.post(newBill)
+      expect(postSpy).toHaveBeenCalledTimes(1)
       expect(bills.data.length).toBe(5)
     })
-  })
-
-  test("Then it should POST a bill but error 404", async () => {
-    firebase.post.mockImplementationOnce(()=>
-      Promise.reject(new Error('404 error'))
-    )
-    const html = BillsUi({ error: "404 error" })
-    document.body.innerHTML = html
-    const message = await getByText(/Erreur 404/)
-    expect(message).toBeTruthy()
-  })
-  test("It should add bill from an API and fails with 500 message error", async () => {
-    firebase.post.mockImplementationOnce(() =>
-      Promise.reject(new Error("Erreur 500"))
-    )
-    const html = BillsUi({ error: "500 error" })
-    document.body.innerHTML = html
-    const message = await screen.getByText(/Erreur 500/)
-    expect(message).toBeTruthy()
   })
 })
 

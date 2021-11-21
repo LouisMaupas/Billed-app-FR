@@ -21,19 +21,7 @@ const row = (bill) => {
 
 const rows = (data) => {
   // FIXED BUG#1 [Bug report] TRIER PAR ORDRE DECROISSANT
-  if (data && data.length) {
-    function compare( a, b ) {
-      if ( a.dateObj < b.dateObj ){
-        return -1;
-      }
-      if ( a.dateObj > b.dateObj ){
-        return 1;
-      }
-      return 0;
-    }
-    data.sort(compare)
-    return data.map(bill => row(bill)).join("")
-  }
+  return (data && data.length) ? data.sort((a,b)=>{return new Date(b.date) - new Date(a.date)}).map(bill => row(bill)).join("") : ""
 } 
 
 export default ({ data: bills, loading, error }) => {

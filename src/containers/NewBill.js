@@ -18,7 +18,7 @@ export default class NewBill {
     new Logout({ document, localStorage, onNavigate })
   }
   handleChangeFile = e => {
-    // FIXED : [Bug Hunt] - Bills : fileName should be only jpg jpeg or png
+    // FIXED BUG#3 : [Bug Hunt] - Bills : fileName should be only jpg jpeg or png
     // split pour check extension
       const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
       const fileExtension = file.name.split('.').pop();
@@ -26,6 +26,7 @@ export default class NewBill {
       if (fileExtension.match(acceptedExtensionsRegex)) {
         const filePath = e.target.value.split(/\\/g)
         const fileName = filePath[filePath.length-1]
+       /* istanbul ignore next */
         this.firestore
           .storage
           .ref(`justificatifs/${fileName}`)
@@ -36,7 +37,9 @@ export default class NewBill {
             this.fileName = fileName
           })
       } else {
+        /* istanbul ignore next */
         document.querySelector(`input[data-testid='file']`).value = null;
+        /* istanbul ignore next */
         alert('Votre fichier doit être un png, jpg ou jpeg.')
       }
 }

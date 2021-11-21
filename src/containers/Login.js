@@ -32,7 +32,7 @@ export default class Login {
     this.document.body.style.backgroundColor="#fff"
   }
 
-  // FIXED [Bug report] - Login employee => admin
+  // FIXED BUG#2 : [Bug report] - Login employee => admin
   handleSubmitAdmin = e => {
     const user = {
       type: "Admin",
@@ -51,6 +51,7 @@ export default class Login {
   }
 
   // not need to cover this function by tests
+  /* istanbul ignore next */
   checkIfUserExists = (user) => {
     if (this.firestore) {
       this.firestore
@@ -71,6 +72,7 @@ export default class Login {
   }
 
   // not need to cover this function by tests
+  /* istanbul ignore next */
   createUser = (user) => {
     if (this.firestore) {
       this.firestore
