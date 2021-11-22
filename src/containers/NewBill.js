@@ -23,7 +23,7 @@ export default class NewBill {
       const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
       const fileExtension = file.name.split('.').pop();
       const acceptedExtensionsRegex = /(png|jpg|jpeg)/g;
-      if (fileExtension.match(acceptedExtensionsRegex)) {
+      if (fileExtension.match(acceptedExtensionsRegex) && this.firestore ) {
         const filePath = e.target.value.split(/\\/g)
         const fileName = filePath[filePath.length-1]
        /* istanbul ignore next */

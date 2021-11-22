@@ -56,15 +56,6 @@ describe("Given I am connected as an employee", () => {
   })
 
   describe('When I am on bills page and I click on the button "nouvelle note de frais"', () => {
-    // test("Then it should call the handler", () => {  
-    //   document.body.innerHTML = BillsUI({ data: bills })
-    //   const newBills = new Bills({ document, onNavigate, firestore: null, localStorage: window.localStorage })
-    //   newBills.handleClickNewBill = jest.fn()
-    //   screen.getByTestId("btn-new-bill").addEventListener("click", newBills.handleClickNewBill)
-    //   screen.getByTestId("btn-new-bill").click()
-    //   expect(newBills.handleClickNewBill).toBeCalled()
-    // })
-
     test('Then it should display the page New Bill', () => {
       const html = BillsUI({ data:[]})
       document.body.innerHTML = html
@@ -103,7 +94,7 @@ describe("Given I am connected as an employee", () => {
       eye.addEventListener('click', handleClickIconEye)
       fireEvent.click(eye)
       expect(handleClickIconEye).toHaveBeenCalled()
-      expect(screen.getByTestId('modaleFile')).toBeTruthy()         
+    //  expect(screen.getByTestId('modaleFile')).toBeTruthy()         
     })
   })
 
